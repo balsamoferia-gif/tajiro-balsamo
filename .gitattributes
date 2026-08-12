@@ -1,0 +1,13 @@
+# Los finales de linea se guardan siempre igual en el repositorio, sin importar
+# desde que computadora se edite. Sin esto, abrir el proyecto en Windows marca
+# archivos como modificados aunque nadie los haya tocado.
+* text=auto eol=lf
+
+# Estos son binarios: si Git los tratara como texto los rompe.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.ico binary
+*.woff binary
+*.woff2 binary

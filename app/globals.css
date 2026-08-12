@@ -1,0 +1,279 @@
+@import "tailwindcss";
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   TAJIRO — estilos base
+
+   Los colores y las fuentes se declaran una sola vez acá, en @theme, y
+   Tailwind genera las clases solas: --color-tajiro habilita `text-tajiro`,
+   `bg-tajiro`, `border-tajiro`, etc.
+
+   REGLA QUE GOBIERNA TODO EL ARCHIVO — el rojo #C8102C sobre el fondo oscuro
+   da 3,43:1. Alcanza para texto grande (>=24px, o >=18,7px en negrita) y para
+   elementos gráficos; NO para texto chico. Por eso el rojo sólo aparece como
+   relleno de botón (blanco encima = 5,90:1), palabra acentuada dentro de un
+   titular, filete, o pieza señalada del despiece. Nunca en labels, links ni
+   párrafos. Ver README.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@theme {
+  /* marca (DESIGN.md §3) */
+  --color-tajiro: #c8102c;
+  --color-tajiro-oscuro: #9a0c21;
+  --color-tinta: #14171a;
+  --color-papel: #ececea;
+  --color-papel-ficha: #fafaf8;
+  --color-cota: #7c8085;
+
+  /* superficies oscuras */
+  --color-fondo: #02070d;
+  --color-superficie: #16181b;
+  --color-superficie-2: #1e2124;
+  --color-borde: #2a2e33;
+  --color-texto: #f7f7f7;
+  --color-texto-tenue: #9aa0a6; /* 8,5:1 sobre el fondo */
+  --color-foto: #ffffff; /* mat de las fotos: igual al fondo de estudio */
+
+  /* tipografía — Allotrope viene del kit de Adobe Fonts kof1bhb (ver layout.tsx) */
+  --font-display: "allotrope", system-ui, sans-serif;
+  --font-sans: "allotrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Consolas, monospace;
+
+  --radius-ficha: 14px;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 96px;   /* alto de la barra (80px) + aire */
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-fondo);
+    color: var(--color-texto);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  /* Foco de teclado visible y con estilo propio (DESIGN.md §6). */
+  :where(a, button, input, textarea, select, [tabindex]):focus-visible {
+    outline: 2px solid var(--color-tajiro);
+    outline-offset: 2px;
+    border-radius: 3px;
+  }
+}
+
+/* ── Piezas de texto que se repiten en varias secciones ───────────────────── */
+
+@layer components {
+  /* Titular del hero. */
+  .titular {
+    font-family: var(--font-display);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -0.015em;
+    line-height: 0.95;
+    font-size: clamp(2.5rem, 5.8vw, 4.75rem);
+  }
+
+  /* Título de sección. */
+  .titulo-seccion {
+    font-family: var(--font-display);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 1;
+    font-size: clamp(1.875rem, 3.8vw, 2.875rem);
+  }
+
+  /* Botones. */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1rem 1.75rem;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 1;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border: 1.5px solid transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  }
+  .btn-rojo {
+    background-color: var(--color-tajiro);
+    color: var(--color-papel-ficha); /* 5,90:1 */
+  }
+  .btn-rojo:hover {
+    background-color: var(--color-tajiro-oscuro);
+  }
+  .btn-linea {
+    border-color: var(--color-borde);
+    color: var(--color-texto);
+    background-color: transparent;
+  }
+  .btn-linea:hover {
+    border-color: var(--color-texto);
+    background-color: rgb(247 247 247 / 0.05);
+  }
+
+  /* Campos de formulario. */
+  .campo-input {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    background-color: var(--color-fondo);
+    color: var(--color-texto);
+    border: 1px solid var(--color-borde);
+    border-radius: 8px;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+  .campo-input::placeholder {
+    color: var(--color-cota);
+  }
+  .campo-input:focus {
+    outline: none;
+    border-color: var(--color-tajiro);
+    box-shadow: 0 0 0 3px rgb(200 16 44 / 0.25);
+  }
+  .campo-input[aria-invalid="true"] {
+    border-color: var(--color-tajiro);
+  }
+}
+
+/* ── Haces de luz del fondo del hero ──────────────────────────────────────── */
+
+.haz {
+  position: absolute;
+  left: -20%;
+  width: 140%;
+  height: 90px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgb(247 247 247 / 0.055) 35%,
+    rgb(247 247 247 / 0.09) 55%,
+    transparent
+  );
+  filter: blur(28px);
+  rotate: -12deg;
+}
+.haz-1 { top: 6%; }
+.haz-2 { top: 42%; height: 130px; opacity: 0.7; rotate: -8deg; }
+.haz-3 { top: 78%; height: 70px; opacity: 0.55; rotate: -14deg; }
+
+.resplandor {
+  position: absolute;
+  right: -8%;
+  top: 12%;
+  width: 620px;
+  height: 620px;
+  background: radial-gradient(circle, rgb(200 16 44 / 0.16), transparent 62%);
+  filter: blur(20px);
+}
+
+/* ── El despiece que se dibuja solo (elemento firma, DESIGN.md §3) ─────────── */
+/*
+   Sin JavaScript el dibujo aparece ya hecho. La clase .js-despiece la agrega
+   el componente al montarse, y recién ahí se prepara la animación. La longitud
+   real de cada trazo se mide con getTotalLength() para que el dibujo avance
+   parejo. El eje y las líneas de cota no se animan: son el pautado de la hoja.
+*/
+
+.despiece-svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+.despiece-svg .trazo {
+  stroke: var(--color-texto);
+  vector-effect: non-scaling-stroke;
+  stroke-linecap: butt;
+}
+.despiece-svg .trazo-eje,
+.despiece-svg .trazo-cota {
+  stroke: var(--color-cota);
+}
+.despiece-svg .punto-llamada {
+  fill: var(--color-tajiro);
+}
+.despiece-svg .pieza-destacada .trazo {
+  stroke: var(--color-tajiro);
+  stroke-width: 2;
+}
+.despiece-svg .despiece-num text {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  fill: var(--color-texto);
+}
+
+.js-despiece .despiece-svg .pieza .trazo {
+  stroke-dasharray: var(--largo, 1200);
+  stroke-dashoffset: var(--largo, 1200);
+}
+.js-despiece .despiece-svg .pieza-destacada .trazo {
+  stroke: var(--color-texto);
+  stroke-width: 1.5;
+}
+.js-despiece .despiece-svg .punto-llamada {
+  opacity: 0;
+}
+.js-despiece .cota-destacada {
+  opacity: 0;
+}
+
+.js-despiece .is-dibujando .pieza .trazo {
+  animation: trazar 1.2s ease-out forwards;
+}
+.js-despiece .is-dibujando .pieza-destacada .trazo {
+  animation: trazar 1.2s ease-out forwards, resaltar 0.3s ease-out 1.4s forwards;
+}
+.js-despiece .is-dibujando .punto-llamada,
+.js-despiece .is-dibujando .cota-destacada {
+  animation: aparecer 0.3s ease-out 1.4s forwards;
+}
+
+@keyframes trazar {
+  to { stroke-dashoffset: 0; }
+}
+@keyframes resaltar {
+  to { stroke: var(--color-tajiro); stroke-width: 2; }
+}
+@keyframes aparecer {
+  to { opacity: 1; }
+}
+
+/* ── Movimiento reducido ──────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  /* el despiece aparece ya dibujado y resaltado, sin animar */
+  .js-despiece .despiece-svg .pieza .trazo {
+    stroke-dasharray: none;
+    stroke-dashoffset: 0;
+  }
+  .js-despiece .despiece-svg .pieza-destacada .trazo {
+    stroke: var(--color-tajiro);
+    stroke-width: 2;
+  }
+  .js-despiece .despiece-svg .punto-llamada,
+  .js-despiece .cota-destacada {
+    opacity: 1;
+  }
+}

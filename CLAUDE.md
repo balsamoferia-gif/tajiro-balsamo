@@ -17,9 +17,14 @@ página* está en `README.md`, y las reglas de marca en `DESIGN.md`.
   se le escribe, ni se le abre un PR, ni se clona para modificar.
 - **`AGENTS.md` lo reescribe `next dev` solo.** No editarlo: se pierde. Todo lo
   del proyecto va acá.
-- El proyecto **todavía no está en git**. Antes de sacar una sección, se
-  desconecta (se deja de importar) en vez de borrar el archivo, porque no hay
-  historial del que recuperarla.
+- El proyecto vive en **`balsamoferia-gif/tajiro-balsamo`** (privado), rama
+  `main`. Ya hay historial: se puede borrar código con confianza, porque se
+  recupera. La costumbre de desconectar en vez de borrar viene de cuando no lo
+  había y ya no hace falta sostenerla.
+- **Las fotos originales de cámara NO están en el repositorio** (263 MB,
+  excluidas en `.gitignore`). Sólo están en la computadora del dueño. Clonar el
+  repo en otra máquina no las trae, así que ahí no se pueden regenerar las
+  fotos del banner con `scripts/preparar-banner.mjs`.
 
 ## Dónde va cada cosa
 

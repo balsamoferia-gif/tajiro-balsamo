@@ -3,6 +3,14 @@
 Next.js 16 + React 19 + TypeScript + Tailwind 4. Misma estructura que Aequipe,
 para que las dos marcas se mantengan igual.
 
+Repositorio: **`balsamoferia-gif/tajiro-balsamo`** (privado), rama `main`.
+
+> **Las fotos originales de cámara no están acá.** Son 263 MB y quedan afuera a
+> propósito (`.gitignore`). En el repositorio están sólo las versiones ya
+> preparadas, en `public/images`. Si clonás el proyecto en otra computadora vas
+> a poder cambiar todos los textos, pero para preparar una foto nueva del
+> banner necesitás los originales, que están en la máquina del dueño.
+
 ---
 
 ## Para arrancar

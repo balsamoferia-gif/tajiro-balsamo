@@ -1,6 +1,6 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { marca } from "@/content/tajiro"
+import { marca, negocio } from "@/content/tajiro"
 import "./globals.css"
 
 export const metadata: Metadata = {
@@ -19,9 +19,26 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "es_AR",
+    siteName: marca.nombre,
+    url: marca.sitio,
     title: `${marca.nombre} — Repuestos para vehículos Nissan`,
     description: "La única marca desarrollada exclusivamente para vehículos Nissan. Distribuida por Balsamo.",
-    images: ["/images/hero-frenos.jpg"],
+    /* El ancho, el alto y el texto van declarados: sin eso, WhatsApp muestra
+       la vista previa chica mientras baja la imagen para medirla. */
+    images: [
+      {
+        url: marca.fotoCompartir,
+        width: 1200,
+        height: 630,
+        alt: `${marca.nombre} — repuestos para vehículos Nissan`,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${marca.nombre} — Repuestos para vehículos Nissan`,
+    description: "La única marca desarrollada exclusivamente para vehículos Nissan. Distribuida por Balsamo.",
+    images: [marca.fotoCompartir],
   },
 }
 
@@ -49,17 +66,61 @@ export default function RootLayout({
         />
 
         <meta name="theme-color" content="#02070d" />
+
+        {/* La ficha que lee Google. Son DOS cosas enlazadas, no una:
+              · TAJIRO es la marca.
+              · Balsamo es el negocio, con dirección, teléfono y horarios.
+            Mezclarlas sería declarar que TAJIRO atiende en un mostrador, que
+            no es lo que pasa. Con la parte de negocio bien puesta es como la
+            empresa puede aparecer en el mapa de Google.
+
+            Los datos salen de `negocio`, en content/tajiro.ts, que es el
+            gemelo en formato de máquina de lo que se ve en la sección de
+            contacto. */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
-              "@type": "Brand",
-              name: marca.nombre,
-              slogan: marca.slogan,
-              description: "Línea de repuestos desarrollada exclusivamente para vehículos Nissan.",
-              url: marca.sitio,
-              manufacturer: { "@type": "Organization", name: marca.distribuidor },
+              "@graph": [
+                {
+                  "@type": "Brand",
+                  "@id": `${marca.sitio}#marca`,
+                  name: marca.nombre,
+                  slogan: marca.slogan,
+                  description:
+                    "Línea de repuestos desarrollada exclusivamente para vehículos Nissan.",
+                  url: marca.sitio,
+                  logo: new URL(marca.logo, marca.sitio).toString(),
+                  image: new URL(marca.fotoCompartir, marca.sitio).toString(),
+                  distributor: { "@id": `${marca.sitio}#negocio` },
+                },
+                {
+                  "@type": "AutoPartsStore",
+                  "@id": `${marca.sitio}#negocio`,
+                  name: negocio.nombre,
+                  description: `Distribuidor de repuestos. ${marca.trayectoria}.`,
+                  url: marca.sitio,
+                  image: new URL(marca.fotoCompartir, marca.sitio).toString(),
+                  telephone: negocio.telefono,
+                  email: negocio.email,
+                  address: {
+                    "@type": "PostalAddress",
+                    streetAddress: negocio.calle,
+                    addressLocality: negocio.ciudad,
+                    addressRegion: negocio.provincia,
+                    postalCode: negocio.codigoPostal,
+                    addressCountry: negocio.pais,
+                  },
+                  openingHoursSpecification: negocio.horarios.map((h) => ({
+                    "@type": "OpeningHoursSpecification",
+                    dayOfWeek: h.dias,
+                    opens: h.desde,
+                    closes: h.hasta,
+                  })),
+                  brand: { "@id": `${marca.sitio}#marca` },
+                },
+              ],
             }),
           }}
         />

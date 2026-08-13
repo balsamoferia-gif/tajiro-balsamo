@@ -57,13 +57,54 @@ export const marca = {
   trayectoria: "Más de 60 años de trayectoria",
   pais: "Argentina",
 
-  /* Aparece en la pestaña del navegador y en Google. */
-  tituloSEO: "TAJIRO — Repuestos para vehículos Nissan | Distribuido por Balsamo",
+  /* El título principal de la página, el que Google toma como "de qué se
+     trata esto". NO se ve en pantalla: el titular grande que se lee es el del
+     banner, que va cambiando solo. Este es fijo justamente por eso — si
+     dependiera del banner, cambiaría de tema cada 7 segundos. */
+  tituloH1: "TAJIRO — Repuestos para vehículos Nissan",
+
+  /* Aparece en la pestaña del navegador y en Google. Google corta alrededor de
+     los 60 caracteres: de ahí en adelante se ve "…" y se pierde. */
+  tituloSEO: "TAJIRO — Repuestos para vehículos Nissan | Córdoba",
   descripcionSEO:
     "TAJIRO es la línea de repuestos desarrollada exclusivamente para vehículos Nissan: frenos, embrague, suspensión, transmisión, encendido y más. Distribuida por Balsamo, con más de 60 años de trayectoria.",
 
   /* Cambiar por el dominio real antes de publicar. */
   sitio: "https://tajiro.com.ar/",
+
+  /* La imagen que se ve cuando alguien pega el link en WhatsApp, Facebook o
+     LinkedIn. Va en JPG y en 1200x630: es la medida que esperan las redes, y
+     el JPG lo muestran todas (el WEBP a veces no). Se rehace con
+     scripts/preparar-compartir.mjs. */
+  fotoCompartir: "/images/compartir.jpg",
+}
+
+/* ------------------------------------------------------- EL NEGOCIO -- */
+
+/* Los mismos datos de contacto que se ven en pantalla, pero escritos como los
+   entiende Google. Con esto la empresa puede aparecer en el mapa.
+ *
+ * OJO: esto es el gemelo de `contacto.datos`, más abajo. Si cambia el horario
+ * o la dirección hay que tocarlo en los DOS lados — uno es el que lee la
+ * persona y el otro el que lee el buscador.
+ *
+ * El negocio es BALSAMO, no TAJIRO: la dirección y el teléfono son los del
+ * distribuidor. TAJIRO es la marca que vende. Por eso se declaran como dos
+ * cosas distintas y enlazadas, que es la verdad. */
+
+export const negocio = {
+  nombre: "Balsamo",
+  calle: "Av. Circunvalación y Rancagua",
+  ciudad: "Córdoba",
+  provincia: "Córdoba",
+  codigoPostal: "5012",
+  pais: "AR",
+  telefono: "+543514929000",
+  email: "balsamo@balsamo.com.ar",
+
+  /* Los días van con las dos primeras letras en inglés, que es como los pide
+     el formato: Mo Tu We Th Fr Sa Su. Las horas en 24 hs. */
+  horarios: [{ dias: ["Mo", "Tu", "We", "Th", "Fr"], desde: "08:00", hasta: "17:00" }],
 }
 
 /* ------------------------------------------------- LINKS QUE SE REPITEN -- */

@@ -3,7 +3,7 @@
 import Image from "next/image"
 import { useEffect, useRef, useState } from "react"
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion"
-import { hero } from "@/content/tajiro"
+import { hero, marca } from "@/content/tajiro"
 import { Resaltado } from "./resaltado"
 
 /**
@@ -91,7 +91,21 @@ export function HeroSection() {
 
   /* ── textos ───────────────────────────────────────────────────────────── */
 
-  const Titulo = actual === 0 ? "h1" : "h2"
+  /* Los titulares que se VEN no son encabezados de HTML: son párrafos con
+     pinta de titular. El encabezado principal de la página es uno solo, fijo,
+     y está más abajo sin verse en pantalla.
+
+     Por qué. Antes esto era `actual === 0 ? "h1" : "h2"`, y traía dos
+     problemas. Uno: como el banner gira solo, había ratos en que la página no
+     tenía ningún título principal, y Google la mira en un momento cualquiera.
+     Dos: este bloque se dibuja dos veces —una versión para computadora y otra
+     para celular, las dos en el HTML aunque se vea una sola—, así que en la
+     primera diapositiva había DOS títulos principales.
+
+     No alcanza con poner el h1 en una de las dos versiones: la que queda
+     escondida por el tamaño de pantalla desaparece también para los lectores
+     de pantalla, y entonces en celular no habría título. */
+  const Titulo = "p"
 
   const botones = hero.mostrarBotones && (
     <div className="flex flex-wrap gap-3.5 max-md:justify-center">
@@ -138,6 +152,12 @@ export function HeroSection() {
         arrastrando ? "cursor-grabbing select-none" : "cursor-grab"
       }`}
     >
+      {/* El título principal de la página. No se ve, pero siempre está: no
+          depende de qué diapositiva se muestre ni de si la pantalla es chica
+          o grande. `sr-only` lo esconde a la vista dejándolo disponible para
+          Google y para los lectores de pantalla. */}
+      <h1 className="sr-only">{marca.tituloH1}</h1>
+
       <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
         <span className="haz haz-1" />
         <span className="haz haz-2" />

@@ -269,7 +269,17 @@ Verificado a 360px y 1440px en navegador real.
 
 ## Antes de publicar
 
-1. **Credenciales de EmailJS**, para el formulario de ventas mayoristas.
+> **El dominio es el primero de la lista, y arrastra a los demás.** Está en
+> `marca.sitio`, dentro de `content/tajiro.ts`, hoy con un valor provisorio
+> (`https://tajiro.com.ar/`). De ahí salen la dirección oficial que declara el
+> sitio, el `robots.txt`, el mapa del sitio y la dirección de la imagen para
+> compartir. Si sale publicado con el dominio equivocado, las cuatro cosas
+> apuntan mal. Se cambia en un solo lugar.
+
+1. **Dominio real** en `marca.sitio` (`content/tajiro.ts`). Ver el aviso de
+   arriba.
+
+2. **Credenciales de EmailJS**, para el formulario de ventas mayoristas.
    Copiá `.env.local.example` como `.env.local` y pegá los tres valores de la
    cuenta de EmailJS — los mismos que usa Aequipe si apunta a la misma cuenta.
    En Vercel hay que cargarlas a mano en *Settings → Environment Variables*.
@@ -279,15 +289,36 @@ Verificado a 360px y 1440px en navegador real.
    **plantilla de EmailJS de Aequipe funcione sin cambios**. La traducción está
    en `lib/enviar-mayorista.ts`.
 
-2. **Dominio autorizado en Adobe Fonts.** El kit de Allotrope sólo entrega las
+3. **Dominio autorizado en Adobe Fonts.** El kit de Allotrope sólo entrega las
    fuentes en los dominios cargados en la cuenta. Hay que agregar producción y
-   staging antes de publicar, o la página cae a la fuente del sistema.
-3. **URL de InfoBal.** Está en `content/tajiro.ts`, en `links.infobal`. Hoy
+   staging antes de publicar, o la página cae a la fuente del sistema. Es la
+   trampa clásica del día del lanzamiento: el sitio sale con otra letra y no
+   hay nada roto en el código.
+4. **URL de InfoBal.** Está en `content/tajiro.ts`, en `links.infobal`. Hoy
    apunta a una sección de la misma página.
-4. **Dominio real** en `marca.sitio`, dentro de `content/tajiro.ts`.
 
 Ya resueltos: el logotipo (está en `public/images/logo-tajiro.png`) y las redes
 del pie, que ahora apuntan a las cuentas reales.
+
+### Lo que Google necesita, y dónde está
+
+| Qué | Dónde se genera | De dónde sale |
+|---|---|---|
+| Título principal de la página | `hero-section.tsx`, escondido a la vista | `marca.tituloH1` |
+| Título de la pestaña y de Google | `app/layout.tsx` | `marca.tituloSEO` |
+| Imagen para compartir | `scripts/preparar-compartir.mjs` | `marca.fotoCompartir` |
+| `robots.txt` | `app/robots.ts` | `marca.sitio` |
+| Mapa del sitio | `app/sitemap.ts` | `marca.sitio` |
+| Ficha de negocio (mapa de Google) | `app/layout.tsx` | `negocio` |
+| Página de error | `app/not-found.tsx` | — |
+
+Dos cosas que conviene no olvidar:
+
+- **El título principal no se ve en pantalla.** El titular grande del banner es
+  un párrafo con pinta de titular, porque va cambiando cada 7 segundos y no
+  puede ser el título de la página. El de verdad está escondido y es fijo.
+- **`negocio` es el gemelo de `contacto.datos`.** Uno lo lee la persona y el
+  otro el buscador. Si cambia un horario o la dirección, hay que tocar los dos.
 
 ### Pendientes de contenido (son los de `DESIGN.md` §7)
 

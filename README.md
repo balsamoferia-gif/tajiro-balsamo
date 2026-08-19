@@ -167,7 +167,9 @@ app/
   page.tsx               ← el orden de las secciones
   layout.tsx             ← título, fuentes, datos para Google
   globals.css            ← colores, tipografía y el despiece animado
-  icon.svg               ← favicon
+  favicon.ico            ← el ícono de la pestaña (16 y 32px)
+  robots.ts  sitemap.ts  ← lo que lee Google, se generan al publicar
+  not-found.tsx          ← la página de error
 components/
   navbar.tsx             hero-section.tsx         quick-access-section.tsx
   brand-panel-section.tsx  highlights-section.tsx  about-section.tsx

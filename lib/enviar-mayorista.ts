@@ -24,11 +24,18 @@
  *
  * ── LO QUE VIAJA TIENE QUE SER IDÉNTICO A LO DE AEQUIPE ────────────────────
  *
- * Aequipe manda esto:
+ * Los dos sitios mandan lo mismo salvo el nombre del remitente:
  *
- *     { ...datos, form_type: "Empresa", from_name: "Aequipe" }
+ *     Aequipe manda   { ...datos, form_type: "Empresa", from_name: "Aequipe" }
+ *     ACÁ se manda    { ...datos, form_type: "Empresa", from_name: "TAJIRO"  }
+ *                                                                   ^^^^^^
+ *                                              lo único que cambia entre los dos
  *
- * Dos detalles que parecen menores y no lo son:
+ * `from_name` es el nombre que ve quien recibe el mail. Tiene que decir
+ * TAJIRO: poner "Aequipe" en los mails de TAJIRO sería copiar de más.
+ *
+ * Todo lo demás sí se copia tal cual, y hay dos detalles que parecen menores
+ * y no lo son:
  *
  *  · `form_type` vale "Empresa", NO "Mayorista". Es la palabra con la que la
  *    plantilla decide qué mail armar. Con cualquier otra, no reconoce el
@@ -38,10 +45,6 @@
  *    usa `...datos` sin filtrar. Si un campo no viaja, la plantilla se queda
  *    sin esa variable — y si es una de las que usa para armar el destinatario
  *    o el asunto, el envío falla entero, no sale un mail incompleto.
- *
- * Lo único que NO se copia es `from_name`: ahí va "TAJIRO", que es el nombre
- * que tiene que aparecer como remitente. Poner "Aequipe" en los mails de
- * TAJIRO sería copiar de más.
  */
 const TRADUCCION: Record<string, string> = {
   nombre: "name",

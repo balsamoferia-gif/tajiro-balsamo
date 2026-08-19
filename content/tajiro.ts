@@ -228,7 +228,7 @@ export const numeros = {
   titulo: "NÚMEROS **QUE NOS DEFINEN**",
   cifras: [
     { cifra: "300", label: "DISTRIBUIDORES" },
-    { cifra: "1.500", label: "REFERENCIAS" },
+    { cifra: "4.000", label: "REFERENCIAS" },
     { cifra: "7", label: "AÑOS EN EL MERCADO" },
     { cifra: "5.000", label: "VENTAS DIARIAS" },
   ],

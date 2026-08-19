@@ -176,7 +176,7 @@ Ninguna sección repite el patrón de la anterior.
 ├──────────────────────────────────────────────────────────────┤
 │ REF.  │  NÚMEROS QUE NOS DEFINEN                             │
 │ 02    │  ┌──────────┬──────────┬──────────┬──────────┐       │
-│       │  │ +300     │ +1.500   │ +7       │ +5.000   │       │
+│       │  │ +300     │ +4.000   │ +7       │ +5.000   │       │
 │       │  │ DISTRIB. │ REFEREN. │ AÑOS     │ VENTAS/D │       │
 │       │  └──────────┴──────────┴──────────┴──────────┘       │
 ├──────────────────────────────────────────────────────────────┤
@@ -251,7 +251,7 @@ datos, cifras ni beneficios nuevos**.
 | Cifra | Label |
 |---|---|
 | +300 | Distribuidores |
-| +1.500 | Referencias |
+| +4.000 | Referencias |
 | +7 | Años en el mercado |
 | +5.000 | Ventas diarias |
 

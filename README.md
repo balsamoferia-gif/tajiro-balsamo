@@ -289,6 +289,29 @@ Verificado a 360px y 1440px en navegador real.
    **plantilla de EmailJS de Aequipe funcione sin cambios**. La traducción está
    en `lib/enviar-mayorista.ts`.
 
+   **Lo que viaja es idéntico a lo de Aequipe**, y hay tres cosas que no se
+   pueden tocar sin romper el mail:
+
+   | | Valor | Por qué |
+   |---|---|---|
+   | `form_type` | `"Empresa"` | Es la palabra con la que la plantilla decide qué mail armar |
+   | Campos vacíos | Viajan igual | Si falta una variable que la plantilla usa para el destinatario, falla el envío entero |
+   | `hasShop` | `yes` / `planning` / `other` | Códigos, no el texto en castellano |
+
+   Lo único distinto es `from_name`, que dice `"TAJIRO"` en vez de `"Aequipe"`:
+   es el nombre que aparece como remitente.
+
+   **Si el mail no llega y el código está bien, el problema es de la cuenta.**
+   Tres cosas para revisar en el panel de EmailJS, ninguna se arregla acá:
+
+   - El **dominio tiene que estar autorizado**. EmailJS rechaza los pedidos que
+     vienen de un dominio que no figura en la lista de la cuenta. Si sólo está
+     el de Aequipe, los de `tajiro.com.ar` se rechazan.
+   - Las **tres variables tienen que estar cargadas en Vercel**, no sólo en la
+     computadora. Son de las que se hornean al publicar: si no están al momento
+     de publicar, no están.
+   - La **plantilla tiene que reconocer `form_type: "Empresa"`**.
+
 3. **Dominio autorizado en Adobe Fonts.** El kit de Allotrope sólo entrega las
    fuentes en los dominios cargados en la cuenta. Hay que agregar producción y
    staging antes de publicar, o la página cae a la fuente del sistema. Es la

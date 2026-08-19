@@ -499,10 +499,22 @@ export const contacto = {
     "Responsable No Inscripto",
   ],
 
+  /* Estas opciones tienen DOS partes, y no es un capricho.
+   *
+   *   `texto`  es lo que lee la persona en la pantalla.
+   *   `valor`  es lo que viaja en el mail.
+   *
+   * El `valor` es el mismo que usa Aequipe (yes / planning / other), porque
+   * las dos marcas mandan a la misma plantilla de EmailJS. Si acá viajara el
+   * texto en castellano, el mail de TAJIRO llegaría distinto al de Aequipe y
+   * habría que mantener dos plantillas.
+   *
+   * El texto sí se puede cambiar libremente. El valor NO: tiene que quedar
+   * igual al de Aequipe. */
   opcionesTaller: [
-    "Sí, tengo una casa de repuestos",
-    "No, pero planeo abrir una",
-    "Otro",
+    { valor: "yes", texto: "Sí, tengo una casa de repuestos" },
+    { valor: "planning", texto: "No, pero planeo abrir una" },
+    { valor: "other", texto: "Otro" },
   ],
 }
 

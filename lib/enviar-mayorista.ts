@@ -20,8 +20,28 @@
  * de Aequipe espera los nombres que usa Aequipe (companyName, vatCategory…).
  *
  * Acá se traducen antes de mandar. Así, si TAJIRO apunta a LA MISMA plantilla
- * de EmailJS que Aequipe, el mail llega completo sin tocar nada. Si en cambio
- * se arma una plantilla nueva para TAJIRO, usar estos mismos nombres.
+ * de EmailJS que Aequipe, el mail llega completo sin tocar nada.
+ *
+ * ── LO QUE VIAJA TIENE QUE SER IDÉNTICO A LO DE AEQUIPE ────────────────────
+ *
+ * Aequipe manda esto:
+ *
+ *     { ...datos, form_type: "Empresa", from_name: "Aequipe" }
+ *
+ * Dos detalles que parecen menores y no lo son:
+ *
+ *  · `form_type` vale "Empresa", NO "Mayorista". Es la palabra con la que la
+ *    plantilla decide qué mail armar. Con cualquier otra, no reconoce el
+ *    formulario.
+ *
+ *  · Aequipe manda TODOS los campos, incluso los que quedaron vacíos, porque
+ *    usa `...datos` sin filtrar. Si un campo no viaja, la plantilla se queda
+ *    sin esa variable — y si es una de las que usa para armar el destinatario
+ *    o el asunto, el envío falla entero, no sale un mail incompleto.
+ *
+ * Lo único que NO se copia es `from_name`: ahí va "TAJIRO", que es el nombre
+ * que tiene que aparecer como remitente. Poner "Aequipe" en los mails de
+ * TAJIRO sería copiar de más.
  */
 const TRADUCCION: Record<string, string> = {
   nombre: "name",
@@ -53,15 +73,18 @@ export async function enviarMayoristaPorMail(datos: FormData) {
     )
   }
 
-  const cuerpo: Record<string, string> = {
-    form_type: "Mayorista",
-    from_name: "TAJIRO",
-  }
+  /* Se arranca con los once campos en blanco y después se completan. Así
+     siempre viajan los once, aunque la persona haya dejado alguno vacío —
+     igual que el `...datos` de Aequipe. */
+  const cuerpo: Record<string, string> = {}
+  for (const nombreAequipe of Object.values(TRADUCCION)) cuerpo[nombreAequipe] = ""
 
   for (const [clave, valor] of datos.entries()) {
-    const texto = String(valor).trim()
-    if (texto) cuerpo[TRADUCCION[clave] ?? clave] = texto
+    cuerpo[TRADUCCION[clave] ?? clave] = String(valor).trim()
   }
+
+  cuerpo.form_type = "Empresa"
+  cuerpo.from_name = "TAJIRO"
 
   const { default: emailjs } = await import("@emailjs/browser")
   await emailjs.send(SERVICE_ID!, TEMPLATE_ID!, cuerpo, PUBLIC_KEY!)

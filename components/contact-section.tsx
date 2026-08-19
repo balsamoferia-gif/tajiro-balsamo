@@ -101,6 +101,15 @@ function Area({
 const FLECHA =
   "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237C8085' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E\")"
 
+/* Una opción puede venir como texto suelto —cuando lo que se ve y lo que se
+   manda son lo mismo, como las provincias— o como par, cuando lo que viaja
+   en el mail tiene que ser distinto de lo que se lee. Ver `opcionesTaller`
+   en content/tajiro.ts. */
+export type Opcion = string | { valor: string; texto: string }
+
+export const valorDe = (o: Opcion) => (typeof o === "string" ? o : o.valor)
+export const textoDe = (o: Opcion) => (typeof o === "string" ? o : o.texto)
+
 function Lista({
   id,
   label,
@@ -112,7 +121,7 @@ function Lista({
   label: string
   errores: Errores
   vacio: string
-  opciones: readonly string[]
+  opciones: readonly Opcion[]
 }) {
   return (
     <div className="grid gap-1.5">
@@ -130,8 +139,8 @@ function Lista({
           {vacio}
         </option>
         {opciones.map((o) => (
-          <option key={o} value={o}>
-            {o}
+          <option key={valorDe(o)} value={valorDe(o)}>
+            {textoDe(o)}
           </option>
         ))}
       </select>
@@ -233,8 +242,13 @@ export function ContactSection() {
       "",
     ]
     for (const [clave, valor] of datos.entries()) {
-      const texto = String(valor).trim()
-      if (texto) lineas.push(`${etiquetas[clave] ?? clave}: ${texto}`)
+      const crudo = String(valor).trim()
+      if (!crudo) continue
+      /* Algunas listas mandan un código y muestran otra cosa (taller manda
+         "yes"). Para WhatsApp se vuelve al texto que leyó la persona: un
+         mensaje que diga "yes" no se entiende del otro lado. */
+      const opcion = contacto.opcionesTaller.find((o) => o.valor === crudo)
+      lineas.push(`${etiquetas[clave] ?? clave}: ${opcion ? opcion.texto : crudo}`)
     }
 
     return `https://wa.me/${contacto.whatsapp}?text=${encodeURIComponent(lineas.join("\n"))}`

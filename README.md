@@ -269,19 +269,25 @@ Verificado a 360px y 1440px en navegador real.
 
 ---
 
-## Antes de publicar
+## Estado
 
-> **El dominio es el primero de la lista, y arrastra a los demás.** Está en
-> `marca.sitio`, dentro de `content/tajiro.ts`, hoy con un valor provisorio
-> (`https://tajiro.com.ar/`). De ahí salen la dirección oficial que declara el
-> sitio, el `robots.txt`, el mapa del sitio y la dirección de la imagen para
-> compartir. Si sale publicado con el dominio equivocado, las cuatro cosas
-> apuntan mal. Se cambia en un solo lugar.
+**El sitio está publicado en https://tajiro.com.ar** — el dominio quedó
+confirmado y es el que figura en `marca.sitio`. De ahí salen la dirección
+oficial que declara el sitio, el `robots.txt`, el mapa del sitio y la dirección
+de la imagen para compartir; si algún día cambia, se cambia en ese solo lugar.
 
-1. **Dominio real** en `marca.sitio` (`content/tajiro.ts`). Ver el aviso de
-   arriba.
+**El formulario de venta particular funciona** (sale por WhatsApp).
 
-2. **Credenciales de EmailJS**, para el formulario de ventas mayoristas.
+**El de ventas mayoristas está pendiente de probar.** El código quedó mandando
+exactamente lo mismo que Aequipe, pero al momento de escribir esto el mail no
+llegaba y no se llegó a confirmar cuál de las tres causas de cuenta era. Ver
+el punto 1 de acá abajo.
+
+---
+
+## Pendientes
+
+1. **Credenciales de EmailJS**, para el formulario de ventas mayoristas.
    Copiá `.env.local.example` como `.env.local` y pegá los tres valores de la
    cuenta de EmailJS — los mismos que usa Aequipe si apunta a la misma cuenta.
    En Vercel hay que cargarlas a mano en *Settings → Environment Variables*.
@@ -314,12 +320,12 @@ Verificado a 360px y 1440px en navegador real.
      de publicar, no están.
    - La **plantilla tiene que reconocer `form_type: "Empresa"`**.
 
-3. **Dominio autorizado en Adobe Fonts.** El kit de Allotrope sólo entrega las
+2. **Dominio autorizado en Adobe Fonts.** El kit de Allotrope sólo entrega las
    fuentes en los dominios cargados en la cuenta. Hay que agregar producción y
    staging antes de publicar, o la página cae a la fuente del sistema. Es la
    trampa clásica del día del lanzamiento: el sitio sale con otra letra y no
    hay nada roto en el código.
-4. **URL de InfoBal.** Está en `content/tajiro.ts`, en `links.infobal`. Hoy
+3. **URL de InfoBal.** Está en `content/tajiro.ts`, en `links.infobal`. Hoy
    apunta a una sección de la misma página.
 
 Ya resueltos: el logotipo (está en `public/images/logo-tajiro.png`) y las redes

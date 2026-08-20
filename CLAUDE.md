@@ -5,6 +5,9 @@
 Next.js 16 + React 19 + TypeScript estricto + Tailwind 4 (`@theme` en CSS).
 Se publica estático: `output: 'export'`, `images.unoptimized`.
 
+**El sitio ya está publicado en https://tajiro.com.ar.** No es un proyecto en
+borrador: cualquier cosa que se suba a `main` termina a la vista del público.
+
 Este archivo son las reglas de trabajo. Lo que hay que saber para *editar la
 página* está en `README.md`, y las reglas de marca en `DESIGN.md`.
 
@@ -70,6 +73,18 @@ página* está en `README.md`, y las reglas de marca en `DESIGN.md`.
   un idioma más simple. Analogías antes que términos técnicos.
 - **No inventar arreglos automáticos que tapen lo que pidió.** Un fallback
   "inteligente" que esconde el cambio solicitado se lee como que no se hizo.
+
+## El formulario mayorista
+
+Sale por EmailJS y **lo que viaja tiene que ser idéntico a lo de Aequipe**,
+porque las dos marcas usan la misma plantilla. Tres cosas que no se tocan:
+`form_type` vale `"Empresa"` (no "Mayorista"), los campos vacíos viajan igual
+en vez de saltearse, y `hasShop` manda códigos (`yes` / `planning` / `other`)
+y no el texto en castellano. El detalle está en `lib/enviar-mayorista.ts`.
+
+Si el mail no llega y el código está bien, el problema es de la cuenta de
+EmailJS —dominio no autorizado, variables sin cargar en Vercel, plantilla que
+no reconoce "Empresa"— y no se arregla acá.
 
 ## El rojo
 
